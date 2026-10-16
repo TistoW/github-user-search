@@ -26,6 +26,13 @@ This repository is an assessment, but it follows the same habits I use on Androi
 - [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), a point-of-sale app for retail and F&B businesses, 100K+ downloads on Google Play.
 - [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), a cashier app for small businesses (UMKM).
 
+On the web side, these are full-stack products I built and run, in case they help as reference:
+
+- [zenenta.com](https://zenenta.com): POS, inventory, cash flow, payables and receivables, financial reports and marketplace integration for Indonesian small businesses, with its own Android POS app.
+- [chatsaya.com](https://chatsaya.com): an AI assistant that answers customer chats on WhatsApp, Instagram and Messenger, with hand-over to a human agent at any time.
+- [umkdigital.id](https://umkdigital.id): a platform for Indonesian small businesses covering training, exhibitions, funding and collaboration.
+- [dikebut.com](https://dikebut.com): a white-label shipping aggregator, one API for many couriers.
+
 ## Build and run
 
 You need Android Studio Ladybug or newer, or just a JDK 17 and the Android SDK for the command line. The project builds with the Gradle wrapper, so nothing else has to be installed.

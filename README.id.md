@@ -26,6 +26,13 @@ Repository ini dibuat untuk assessment, tetapi kebiasaan kerjanya sama dengan ya
 - [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), aplikasi kasir untuk bisnis retail dan F&B, 100K+ download di Google Play.
 - [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), aplikasi kasir online untuk UMKM.
 
+Untuk sisi web, berikut produk full-stack yang saya bangun dan jalankan, kalau berguna sebagai referensi:
+
+- [zenenta.com](https://zenenta.com): POS, stok, kas, hutang-piutang, laporan keuangan, dan integrasi marketplace untuk UMKM Indonesia, termasuk aplikasi kasir Android-nya.
+- [chatsaya.com](https://chatsaya.com): asisten AI yang membalas chat pelanggan di WhatsApp, Instagram, dan Messenger, dengan ambil-alih oleh agen manusia kapan saja.
+- [umkdigital.id](https://umkdigital.id): platform untuk UMKM Indonesia yang mencakup pelatihan, pameran, pendanaan, dan kolaborasi.
+- [dikebut.com](https://dikebut.com): aggregator pengiriman white-label, satu API untuk banyak kurir.
+
 ## Build dan menjalankan
 
 Butuh Android Studio Ladybug atau lebih baru, atau cukup JDK 17 dan Android SDK untuk command line. Project dibuild lewat Gradle wrapper, jadi tidak ada yang perlu diinstall lagi.
