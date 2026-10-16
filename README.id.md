@@ -31,7 +31,7 @@ Untuk sisi web, berikut produk full-stack yang saya bangun dan jalankan, kalau b
 
 - [zenenta.com](https://zenenta.com): POS, stok, kas, hutang-piutang, laporan keuangan, dan integrasi marketplace untuk UMKM Indonesia, termasuk aplikasi kasir Android-nya.
 - [chatsaya.com](https://chatsaya.com): asisten AI yang membalas chat pelanggan di WhatsApp, Instagram, dan Messenger, dengan ambil-alih oleh agen manusia kapan saja.
-- [umkdigital.id](https://umkdigital.id): platform untuk UMKM Indonesia yang mencakup pelatihan, pameran, pendanaan, dan kolaborasi.
+- [umkdigital.id](https://umkdigital.id): platform untuk UMKM Indonesia yang mencakup pelatihan, pameran, pendanaan, dan kolaborasi, dipakai untuk UMKM binaan Telkom Indonesia.
 - [dikebut.com](https://dikebut.com): aggregator pengiriman white-label, satu API untuk banyak kurir.
 
 ## Build dan menjalankan

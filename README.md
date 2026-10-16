@@ -31,7 +31,7 @@ On the web side, these are full-stack products I built and run, in case they hel
 
 - [zenenta.com](https://zenenta.com): POS, inventory, cash flow, payables and receivables, financial reports and marketplace integration for Indonesian small businesses, with its own Android POS app.
 - [chatsaya.com](https://chatsaya.com): an AI assistant that answers customer chats on WhatsApp, Instagram and Messenger, with hand-over to a human agent at any time.
-- [umkdigital.id](https://umkdigital.id): a platform for Indonesian small businesses covering training, exhibitions, funding and collaboration.
+- [umkdigital.id](https://umkdigital.id): a platform for Indonesian small businesses covering training, exhibitions, funding and collaboration, used for the small businesses mentored by Telkom Indonesia.
 - [dikebut.com](https://dikebut.com): a white-label shipping aggregator, one API for many couriers.
 
 ## Build and run
