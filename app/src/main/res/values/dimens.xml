@@ -17,4 +17,5 @@
     <dimen name="avatar_detail">96dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="divider_inset">72dp</dimen>
+    <dimen name="detail_gutter">16dp</dimen>
 </resources>

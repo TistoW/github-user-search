@@ -9,5 +9,21 @@
         android:id="@+id/usersFragment"
         android:name="com.tisto.githubusers.presentation.users.UsersFragment"
         android:label="@string/title_users"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users">
+        <action
+            android:id="@+id/action_users_to_detail"
+            app:destination="@id/userDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userDetailFragment"
+        android:name="com.tisto.githubusers.presentation.detail.UserDetailFragment"
+        tools:layout="@layout/fragment_user_detail">
+        <argument
+            android:name="login"
+            app:argType="string" />
+        <argument
+            android:name="avatarUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

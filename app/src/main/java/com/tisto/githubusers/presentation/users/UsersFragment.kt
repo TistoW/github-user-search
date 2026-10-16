@@ -11,14 +11,14 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.tisto.githubusers.R
 import com.google.android.material.snackbar.Snackbar
 import com.tisto.githubusers.databinding.FragmentUsersBinding
-import com.tisto.githubusers.domain.model.DataError
+import com.tisto.githubusers.presentation.common.errorMessage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.ceil
 
 @AndroidEntryPoint
 class UsersFragment : Fragment(R.layout.fragment_users) {
@@ -38,7 +38,9 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             insets
         }
 
-        val adapter = UserAdapter { /* detail navigation arrives with the detail screen */ }
+        val adapter = UserAdapter { user ->
+            findNavController().navigate(UsersFragmentDirections.actionUsersToDetail(user.login, user.avatarUrl))
+        }
         binding.list.layoutManager = LinearLayoutManager(requireContext())
         binding.list.adapter = adapter
         binding.list.addItemDecoration(
@@ -68,7 +70,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             render(binding, state)
             state.errorToShow?.let { error ->
                 viewModel.onErrorShown()
-                Snackbar.make(binding.root, errorMessage(error), Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, requireContext().errorMessage(error), Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry) { viewModel.submit() }
                     .show()
             }
@@ -93,20 +95,5 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
         }
         binding.emptyIcon.setImageResource(icon)
         binding.emptyText.text = text
-    }
-
-    private fun errorMessage(error: DataError): String = when (error) {
-        is DataError.Network -> getString(R.string.error_offline)
-        is DataError.RateLimited -> {
-            val minutes = error.resetAtEpochSeconds
-                ?.let { ceil((it - System.currentTimeMillis() / 1000) / 60.0).toInt() }
-                ?: 0
-            if (minutes > 1) {
-                resources.getQuantityString(R.plurals.error_rate_limited_minutes, minutes, minutes)
-            } else {
-                getString(R.string.error_rate_limited)
-            }
-        }
-        else -> getString(R.string.error_generic)
     }
 }

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorSurface"
+        app:navigationContentDescription="@string/back"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/detail_gutter"
+                    android:paddingTop="@dimen/space_m"
+                    android:paddingBottom="@dimen/space_xl">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/avatar"
+                            android:layout_width="@dimen/avatar_detail"
+                            android:layout_height="@dimen/avatar_detail" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_l"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?attr/textAppearanceTitleLarge"
+                                android:textColor="?attr/colorOnSurface"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/handle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_2xs"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textColor="?attr/colorOnSurfaceVariant" />
+
+                            <TextView
+                                android:id="@+id/type_chip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/space_s"
+                                android:background="@drawable/bg_chip"
+                                android:paddingHorizontal="@dimen/space_m"
+                                android:paddingVertical="@dimen/space_xs"
+                                android:text="@string/user_type_organization"
+                                android:textAppearance="?attr/textAppearanceLabelMedium"
+                                android:textColor="@color/on_primary_container"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_l"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textColor="?attr/colorOnSurface"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/stats"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_l"
+                        android:background="@drawable/bg_stats"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/space_xs"
+                        android:paddingVertical="@dimen/space_m"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/space_m">
+
+                            <TextView
+                                android:id="@+id/stat_followers"
+                                style="@style/Widget.App.StatNumber" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:importantForAccessibility="no"
+                                    android:src="@drawable/ic_people"
+                                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    style="@style/Widget.App.StatLabel"
+                                    android:text="@string/stat_followers" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/space_m">
+
+                            <TextView
+                                android:id="@+id/stat_following"
+                                style="@style/Widget.App.StatNumber" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:importantForAccessibility="no"
+                                    android:src="@drawable/ic_person"
+                                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    style="@style/Widget.App.StatLabel"
+                                    android:text="@string/stat_following" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/space_m">
+
+                            <TextView
+                                android:id="@+id/stat_repos"
+                                style="@style/Widget.App.StatNumber" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:importantForAccessibility="no"
+                                    android:src="@drawable/ic_repo"
+                                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                                <TextView
+                                    style="@style/Widget.App.StatLabel"
+                                    android:text="@string/stat_repos" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_m"
+                        android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/row_company"
+                        style="@style/Widget.App.InfoRow">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_company" />
+
+                        <TextView
+                            android:id="@+id/text_company"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/row_location"
+                        style="@style/Widget.App.InfoRow">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_location" />
+
+                        <TextView
+                            android:id="@+id/text_location"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/row_blog"
+                        style="@style/Widget.App.InfoRow"
+                android:background="?attr/selectableItemBackground">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_link" />
+
+                        <TextView
+                            android:id="@+id/text_blog"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/row_twitter"
+                        style="@style/Widget.App.InfoRow"
+                android:background="?attr/selectableItemBackground">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_alternate_email" />
+
+                        <TextView
+                            android:id="@+id/text_twitter"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/row_email"
+                        style="@style/Widget.App.InfoRow"
+                android:background="?attr/selectableItemBackground">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_mail" />
+
+                        <TextView
+                            android:id="@+id/text_email"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/row_joined"
+                        style="@style/Widget.App.InfoRow">
+
+                        <ImageView
+                            style="@style/Widget.App.InfoIcon"
+                            android:src="@drawable/ic_calendar" />
+
+                        <TextView
+                            android:id="@+id/text_joined"
+                            style="@style/Widget.App.InfoText" />
+                    </LinearLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/view_on_github"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_l"
+                        android:minHeight="@dimen/min_touch_target"
+                        android:text="@string/view_on_github"
+                        app:icon="@drawable/ic_open_in_new"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/not_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/space_2xl"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_error"
+                app:tint="?attr/colorOutline" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_m"
+                android:gravity="center"
+                android:text="@string/not_found_title"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_back"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_l"
+                android:minHeight="@dimen/min_touch_target"
+                android:text="@string/go_back" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -10,6 +10,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.tisto.githubusers.R
 import com.tisto.githubusers.databinding.ItemUserBinding
 import com.tisto.githubusers.domain.model.User
+import com.tisto.githubusers.presentation.common.withAvatarSize
 
 class UserAdapter(private val onClick: (User) -> Unit) :
     ListAdapter<User, UserAdapter.ViewHolder>(DiffCallback) {
@@ -38,7 +39,7 @@ class UserAdapter(private val onClick: (User) -> Unit) :
             // GitHub avatars take an s= size, so ask for about 2x the displayed size instead of the full image.
             val sizePx = root.resources.getDimensionPixelSize(R.dimen.avatar_list) * 2
             Glide.with(avatar)
-                .load(user.avatarUrl.withSize(sizePx))
+                .load(user.avatarUrl.withAvatarSize(sizePx))
                 .override(sizePx)
                 .placeholder(R.drawable.avatar_placeholder)
                 .circleCrop()
@@ -54,5 +55,3 @@ class UserAdapter(private val onClick: (User) -> Unit) :
         override fun areContentsTheSame(old: User, new: User) = old == new
     }
 }
-
-private fun String.withSize(px: Int) = if (contains('?')) "$this&s=$px" else "$this?s=$px"
