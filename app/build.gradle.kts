@@ -23,7 +23,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.tisto.githubusers.HiltTestRunner"
 
         val githubToken = localProperties.getProperty("github.token").orEmpty()
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
@@ -45,6 +45,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    testOptions {
+        animationsDisabled = true
     }
 
     buildFeatures {
@@ -94,6 +98,4 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.contrib)
     androidTestImplementation(libs.hilt.android.testing)
     kspAndroidTest(libs.hilt.compiler)
-    androidTestImplementation(libs.androidx.navigation.testing)
-    debugImplementation(libs.androidx.fragment.testing)
 }
