@@ -24,7 +24,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.tisto.githubusers.compose.HiltTestRunner"
 
         val githubToken = localProperties.getProperty("github.token").orEmpty()
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
@@ -50,6 +50,7 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
+        animationsDisabled = true
     }
 
     buildFeatures {
@@ -99,4 +100,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }
