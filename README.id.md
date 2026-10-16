@@ -19,7 +19,7 @@ Hasil utamanya adalah aplikasi XML di `:app`. Saya juga menulis versi Jetpack Co
   </tr>
 </table>
 
-## Aplikasi Android yang saya bangun dan maintain
+## Pengalaman produksi
 
 Repository ini dibuat untuk assessment, tetapi kebiasaan kerjanya sama dengan yang saya pakai di aplikasi Android yang sudah live di Google Play dan masih saya kembangkan serta maintain sampai sekarang:
 

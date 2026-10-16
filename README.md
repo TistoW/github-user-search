@@ -19,7 +19,7 @@ The main deliverable is the XML app in `:app`. I also wrote the same app in Jetp
   </tr>
 </table>
 
-## Android apps I build and maintain
+## Production work
 
 This repository is an assessment, but it follows the same habits I use on Android apps that are live on Google Play and that I still develop and maintain today:
 
