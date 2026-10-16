@@ -25,6 +25,7 @@ Repository ini dibuat untuk assessment, tetapi kebiasaan kerjanya sama dengan ya
 
 - [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), aplikasi kasir untuk bisnis retail dan F&B, 100K+ download di Google Play.
 - [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), aplikasi kasir online untuk UMKM.
+- [SBB Shop](https://play.google.com/store/apps/details?id=id.sikapaiyabb), toko online dengan aplikasi Android dan web storefront di [sikapaiyabb.id](https://sikapaiyabb.id). Keduanya memakai backend yang sama, jadi produk dan pesanan selalu sinkron di antara keduanya.
 
 Untuk sisi web, berikut produk full-stack yang saya bangun dan jalankan, kalau berguna sebagai referensi:
 

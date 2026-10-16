@@ -25,6 +25,7 @@ This repository is an assessment, but it follows the same habits I use on Androi
 
 - [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), a point-of-sale app for retail and F&B businesses, 100K+ downloads on Google Play.
 - [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), a cashier app for small businesses (UMKM).
+- [SBB Shop](https://play.google.com/store/apps/details?id=id.sikapaiyabb), an online shop with an Android app and a web storefront at [sikapaiyabb.id](https://sikapaiyabb.id). Both run on the same backend, so products and orders stay in sync between them.
 
 On the web side, these are full-stack products I built and run, in case they help as reference:
 
