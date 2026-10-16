@@ -19,6 +19,13 @@ The main deliverable is the XML app in `:app`. I also wrote the same app in Jetp
   </tr>
 </table>
 
+## Android apps I build and maintain
+
+This repository is an assessment, but it follows the same habits I use on Android apps that are live on Google Play and that I still develop and maintain today:
+
+- [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), a point-of-sale app for retail and F&B businesses, 100K+ downloads on Google Play.
+- [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), a cashier app for small businesses (UMKM).
+
 ## Build and run
 
 You need Android Studio Ladybug or newer, or just a JDK 17 and the Android SDK for the command line. The project builds with the Gradle wrapper, so nothing else has to be installed.

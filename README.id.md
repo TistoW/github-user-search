@@ -19,6 +19,13 @@ Hasil utamanya adalah aplikasi XML di `:app`. Saya juga menulis versi Jetpack Co
   </tr>
 </table>
 
+## Aplikasi Android yang saya bangun dan maintain
+
+Repository ini dibuat untuk assessment, tetapi kebiasaan kerjanya sama dengan yang saya pakai di aplikasi Android yang sudah live di Google Play dan masih saya kembangkan serta maintain sampai sekarang:
+
+- [Olsera POS](https://play.google.com/store/apps/details?id=com.olserapratama.pos), aplikasi kasir untuk bisnis retail dan F&B, 100K+ download di Google Play.
+- [Simpel POS](https://play.google.com/store/apps/details?id=com.simpel.pos), aplikasi kasir online untuk UMKM.
+
 ## Build dan menjalankan
 
 Butuh Android Studio Ladybug atau lebih baru, atau cukup JDK 17 dan Android SDK untuk command line. Project dibuild lewat Gradle wrapper, jadi tidak ada yang perlu diinstall lagi.
