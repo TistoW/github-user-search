@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "github-user-search"
 
-include(":app", ":domain", ":data")
+include(":app", ":app-compose", ":domain", ":data")
