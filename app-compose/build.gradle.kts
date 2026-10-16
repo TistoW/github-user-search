@@ -34,6 +34,8 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            // Local assessment only: lets the release APK install without a private keystore.
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
