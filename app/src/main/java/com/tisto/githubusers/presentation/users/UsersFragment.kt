@@ -14,8 +14,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.tisto.githubusers.R
+import com.google.android.material.snackbar.Snackbar
 import com.tisto.githubusers.databinding.FragmentUsersBinding
+import com.tisto.githubusers.domain.model.DataError
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.ceil
 
 @AndroidEntryPoint
 class UsersFragment : Fragment(R.layout.fragment_users) {
@@ -25,10 +28,13 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentUsersBinding.bind(view)
 
-        // The list scrolls under the navigation bar, so only its bottom padding follows the inset.
-        ViewCompat.setOnApplyWindowInsetsListener(binding.list) { list, insets ->
-            val bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-            list.setPadding(list.paddingLeft, list.paddingTop, list.paddingRight, bottom)
+        // The keyboard shrinks the screen so the empty state stays visible. Otherwise only the list's
+        // bottom padding follows the navigation bar, which lets it scroll underneath.
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { root, insets ->
+            val keyboard = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
+            val navBar = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            root.setPadding(0, 0, 0, keyboard)
+            binding.list.setPadding(0, 0, 0, if (keyboard > 0) 0 else navBar)
             insets
         }
 
@@ -43,24 +49,64 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             },
         )
 
-        binding.searchInput.setText(viewModel.query.value)
+        binding.searchInput.setText(viewModel.currentQuery)
         binding.searchInput.doAfterTextChanged { viewModel.onQueryChanged(it.toString()) }
         binding.searchInput.setOnEditorActionListener { input, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(input.windowToken, 0)
                 input.clearFocus()
+                viewModel.submit()
                 true
             } else {
                 false
             }
         }
 
-        viewModel.users.observe(viewLifecycleOwner) { users ->
-            adapter.submitList(users)
-            val queryBlank = viewModel.query.value.isNullOrBlank()
-            binding.recentHeader.isVisible = queryBlank && users.isNotEmpty()
-            binding.emptyState.isVisible = queryBlank && users.isEmpty()
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            adapter.submitList(state.users)
+            render(binding, state)
+            state.errorToShow?.let { error ->
+                viewModel.onErrorShown()
+                Snackbar.make(binding.root, errorMessage(error), Snackbar.LENGTH_LONG)
+                    .setAction(R.string.retry) { viewModel.submit() }
+                    .show()
+            }
         }
+    }
+
+    private fun render(binding: FragmentUsersBinding, state: UsersUiState) {
+        binding.progress.visibility = if (state.isLoading) View.VISIBLE else View.INVISIBLE
+        val recent = state.section == UsersSection.RecentlyViewed
+        binding.recentHeader.isVisible = recent && state.users.isNotEmpty()
+        binding.resultsCount.isVisible = !recent && state.users.isNotEmpty()
+        binding.resultsCount.text =
+            resources.getQuantityString(R.plurals.results_count, state.users.size, state.users.size)
+
+        val showEmpty = state.users.isEmpty() && !state.isLoading
+        binding.emptyState.isVisible = showEmpty
+        if (!showEmpty) return
+        val (icon, text) = when {
+            recent -> R.drawable.ic_search to getString(R.string.empty_start)
+            state.error != null -> R.drawable.ic_cloud_off to getString(R.string.empty_not_loaded)
+            else -> R.drawable.ic_people to getString(R.string.empty_no_matches, state.query)
+        }
+        binding.emptyIcon.setImageResource(icon)
+        binding.emptyText.text = text
+    }
+
+    private fun errorMessage(error: DataError): String = when (error) {
+        is DataError.Network -> getString(R.string.error_offline)
+        is DataError.RateLimited -> {
+            val minutes = error.resetAtEpochSeconds
+                ?.let { ceil((it - System.currentTimeMillis() / 1000) / 60.0).toInt() }
+                ?: 0
+            if (minutes > 1) {
+                resources.getQuantityString(R.plurals.error_rate_limited_minutes, minutes, minutes)
+            } else {
+                getString(R.string.error_rate_limited)
+            }
+        }
+        else -> getString(R.string.error_generic)
     }
 }
