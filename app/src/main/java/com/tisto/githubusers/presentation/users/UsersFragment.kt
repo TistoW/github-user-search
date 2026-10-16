@@ -70,7 +70,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             render(binding, state)
             state.errorToShow?.let { error ->
                 viewModel.onErrorShown()
-                Snackbar.make(binding.root, requireContext().errorMessage(error), Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, requireContext().errorMessage(error, hasCachedResults = state.users.isNotEmpty()), Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry) { viewModel.submit() }
                     .show()
             }

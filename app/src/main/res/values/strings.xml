@@ -13,7 +13,8 @@
     <string name="empty_no_matches">No users match \"%1$s\"</string>
     <string name="empty_not_loaded">Nothing saved for this search yet</string>
 
-    <string name="error_offline">You\'re offline. Showing saved results.</string>
+    <string name="error_offline">You\'re offline.</string>
+    <string name="error_offline_cached">You\'re offline. Showing saved results.</string>
     <string name="error_rate_limited">GitHub\'s search limit reached. Try again in a minute.</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="retry">Retry</string>

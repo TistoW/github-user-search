@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.tisto.githubusers.compose.ui.theme.GitHubUsersTheme
+import com.tisto.githubusers.compose.ui.users.UsersScreenRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,7 +30,7 @@ fun GitHubUsersNavHost() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = UsersRoute) {
         composable<UsersRoute> {
-            Placeholder(text = "Users")
+            UsersScreenRoute(onUserClick = { navController.navigate(DetailRoute(it.login)) })
         }
         composable<DetailRoute> { entry ->
             Placeholder(text = entry.toRoute<DetailRoute>().login)

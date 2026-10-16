@@ -5,8 +5,10 @@ import com.tisto.githubusers.R
 import com.tisto.githubusers.domain.model.DataError
 import kotlin.math.ceil
 
-fun Context.errorMessage(error: DataError): String = when (error) {
-    is DataError.Network -> getString(R.string.error_offline)
+// Offline wording depends on whether the screen still has results to show.
+fun Context.errorMessage(error: DataError, hasCachedResults: Boolean): String = when (error) {
+    is DataError.Network ->
+        getString(if (hasCachedResults) R.string.error_offline_cached else R.string.error_offline)
     is DataError.RateLimited -> {
         val minutes = error.resetAtEpochSeconds
             ?.let { ceil((it - System.currentTimeMillis() / 1000) / 60.0).toInt() }
