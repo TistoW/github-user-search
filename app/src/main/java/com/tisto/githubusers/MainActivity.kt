@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity() {
             val bars = windowInsets.getInsets(
                 WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
             )
-            view.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-            WindowInsetsCompat.CONSUMED
+            // Bottom is left to the screens so their lists can scroll under the navigation bar.
+            view.setPadding(bars.left, bars.top, bars.right, 0)
+            windowInsets
         }
     }
 }

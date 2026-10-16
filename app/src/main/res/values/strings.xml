@@ -2,4 +2,11 @@
 <resources>
     <string name="app_name">GitHub Users</string>
     <string name="title_users">Users</string>
+    <string name="search_hint">Search GitHub users</string>
+    <string name="clear_search">Clear search</string>
+    <string name="recently_viewed">Recently viewed</string>
+    <string name="empty_search">Type a username to look up a developer or an organization.</string>
+    <string name="avatar_description">Avatar of %1$s</string>
+    <string name="user_type_user">User</string>
+    <string name="user_type_organization">Organization</string>
 </resources>
