@@ -122,6 +122,16 @@ class UsersFlowTest {
     }
 
     @Test
+    fun rateLimitedSearchWithoutCacheSaysSoInsteadOfOffline() {
+        repository.searchError = DataError.RateLimited(null)
+
+        search("octo")
+
+        awaitDisplayed(withText(R.string.empty_rate_limited))
+        awaitDisplayed(withText(R.string.error_rate_limited))
+    }
+
+    @Test
     fun missingAccountShowsNotFound() {
         search("octo")
         repository.refreshError = DataError.NotFound()

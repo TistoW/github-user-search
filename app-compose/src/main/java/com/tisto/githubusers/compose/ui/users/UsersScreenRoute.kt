@@ -30,7 +30,7 @@ fun UsersScreenRoute(
     LaunchedEffect(state.errorToShow) {
         val error = state.errorToShow ?: return@LaunchedEffect
         val result = snackbarHostState.showSnackbar(
-            message = resources.errorMessage(error, hasCachedResults = state.users.isNotEmpty()),
+            message = resources.errorMessage(error, hasCachedResults = state.users.isNotEmpty(), isSearch = true),
             actionLabel = retryLabel,
             duration = SnackbarDuration.Long,
         )

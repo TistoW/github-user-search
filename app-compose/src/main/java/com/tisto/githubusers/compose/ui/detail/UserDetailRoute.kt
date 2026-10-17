@@ -38,7 +38,7 @@ fun UserDetailRoute(
     LaunchedEffect(state.error) {
         val error = state.error ?: return@LaunchedEffect
         val result = snackbarHostState.showSnackbar(
-            message = resources.errorMessage(error, hasCachedResults = state.user != null),
+            message = resources.errorMessage(error, hasCachedResults = state.user != null, isSearch = false),
             actionLabel = retryLabel,
             duration = SnackbarDuration.Long,
         )

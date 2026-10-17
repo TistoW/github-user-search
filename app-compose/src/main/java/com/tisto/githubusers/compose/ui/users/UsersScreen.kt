@@ -303,6 +303,10 @@ private fun EmptyState(state: UsersUiState, recent: Boolean, modifier: Modifier 
             icon = R.drawable.ic_search
             text = stringResource(R.string.empty_start)
         }
+        state.error is DataError.RateLimited -> {
+            icon = R.drawable.ic_error
+            text = stringResource(R.string.empty_rate_limited)
+        }
         state.error != null -> {
             icon = R.drawable.ic_cloud_off
             text = stringResource(R.string.empty_not_loaded)

@@ -12,10 +12,12 @@
     <string name="empty_start">Search for a GitHub user to get started</string>
     <string name="empty_no_matches">No users match \"%1$s\"</string>
     <string name="empty_not_loaded">Nothing saved for this search yet</string>
+    <string name="empty_rate_limited">GitHub is limiting requests right now</string>
 
     <string name="error_offline">You\'re offline.</string>
     <string name="error_offline_cached">You\'re offline. Showing saved results.</string>
     <string name="error_rate_limited">GitHub\'s search limit reached. Try again in a minute.</string>
+    <string name="error_api_rate_limited">GitHub\'s API limit reached. Try again later.</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="retry">Retry</string>
 
@@ -26,6 +28,10 @@
     <plurals name="error_rate_limited_minutes">
         <item quantity="one">GitHub\'s search limit reached. Try again in %d minute.</item>
         <item quantity="other">GitHub\'s search limit reached. Try again in %d minutes.</item>
+    </plurals>
+    <plurals name="error_api_rate_limited_minutes">
+        <item quantity="one">GitHub\'s API limit reached. Try again in %d minute.</item>
+        <item quantity="other">GitHub\'s API limit reached. Try again in %d minutes.</item>
     </plurals>
     <string name="back">Back</string>
     <string name="handle">@%1$s</string>

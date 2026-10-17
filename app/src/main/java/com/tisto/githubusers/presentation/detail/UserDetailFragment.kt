@@ -68,7 +68,7 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail) {
 
             state.error?.let { error ->
                 viewModel.onErrorShown()
-                Snackbar.make(binding.root, requireContext().errorMessage(error, hasCachedResults = state.user != null), Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, requireContext().errorMessage(error, hasCachedResults = state.user != null, isSearch = false), Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry) { viewModel.refresh() }
                     .show()
             }

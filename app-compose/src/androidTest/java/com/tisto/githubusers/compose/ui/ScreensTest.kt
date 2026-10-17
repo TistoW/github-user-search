@@ -97,6 +97,13 @@ class ScreensTest {
     }
 
     @Test
+    fun rateLimitedSearchWithoutCacheShowsTheRateLimitEmptyState() {
+        showUsers(UsersUiState(query = "octo", section = UsersSection.Results, error = DataError.RateLimited(null)))
+
+        compose.onNodeWithText(string(R.string.empty_rate_limited)).assertIsDisplayed()
+    }
+
+    @Test
     fun clearButtonEmptiesTheQuery() {
         var query: String? = null
         showUsers(UsersUiState(query = "octo", section = UsersSection.Results), onQueryChange = { query = it })

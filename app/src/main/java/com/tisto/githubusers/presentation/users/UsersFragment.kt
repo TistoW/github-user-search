@@ -17,6 +17,7 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.tisto.githubusers.R
 import com.google.android.material.snackbar.Snackbar
 import com.tisto.githubusers.databinding.FragmentUsersBinding
+import com.tisto.githubusers.domain.model.DataError
 import com.tisto.githubusers.presentation.common.errorMessage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -70,7 +71,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             render(binding, state)
             state.errorToShow?.let { error ->
                 viewModel.onErrorShown()
-                Snackbar.make(binding.root, requireContext().errorMessage(error, hasCachedResults = state.users.isNotEmpty()), Snackbar.LENGTH_LONG)
+                Snackbar.make(binding.root, requireContext().errorMessage(error, hasCachedResults = state.users.isNotEmpty(), isSearch = true), Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry) { viewModel.submit() }
                     .show()
             }
@@ -90,6 +91,7 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
         if (!showEmpty) return
         val (icon, text) = when {
             recent -> R.drawable.ic_search to getString(R.string.empty_start)
+            state.error is DataError.RateLimited -> R.drawable.ic_error to getString(R.string.empty_rate_limited)
             state.error != null -> R.drawable.ic_cloud_off to getString(R.string.empty_not_loaded)
             else -> R.drawable.ic_people to getString(R.string.empty_no_matches, state.query)
         }
