@@ -87,7 +87,7 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail) {
         name.text = user.name?.takeIf { it.isNotBlank() } ?: user.login
         handle.text = getString(R.string.handle, user.login)
         handle.isVisible = !user.name.isNullOrBlank()
-        typeChip.isVisible = user.type.equals("Organization", ignoreCase = true)
+        typeChip.isVisible = user.isOrganization
 
         bio.text = user.bio?.trim()
         bio.isVisible = !user.bio.isNullOrBlank()

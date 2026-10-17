@@ -20,4 +20,6 @@ data class UserDetail(
     val publicGists: Int?,
     // ISO-8601 as GitHub sends it. java.time needs desugaring below API 26, so parsing is left to the UI.
     val createdAt: String?,
-)
+) {
+    val isOrganization: Boolean get() = type.equals("Organization", ignoreCase = true)
+}

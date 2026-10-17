@@ -5,4 +5,6 @@ data class User(
     val login: String,
     val avatarUrl: String,
     val type: String,
-)
+) {
+    val isOrganization: Boolean get() = type.equals("Organization", ignoreCase = true)
+}

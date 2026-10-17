@@ -31,7 +31,7 @@ class UserAdapter(private val onClick: (User) -> Unit) :
         fun bind(user: User) = with(binding) {
             login.text = user.login
             type.setText(
-                if (user.type.equals("Organization", ignoreCase = true)) R.string.user_type_organization
+                if (user.isOrganization) R.string.user_type_organization
                 else R.string.user_type_user,
             )
             avatar.contentDescription = root.context.getString(R.string.avatar_description, user.login)

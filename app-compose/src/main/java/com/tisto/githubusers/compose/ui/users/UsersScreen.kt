@@ -293,7 +293,7 @@ fun UserRow(user: User, onClick: () -> Unit, modifier: Modifier = Modifier) {
             )
             Text(
                 text = stringResource(
-                    if (user.type.equals("Organization", ignoreCase = true)) R.string.user_type_organization
+                    if (user.isOrganization) R.string.user_type_organization
                     else R.string.user_type_user,
                 ),
                 style = MaterialTheme.typography.bodyMedium,

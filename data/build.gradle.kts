@@ -11,7 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -21,10 +20,6 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
-    }
-
-    sourceSets {
-        getByName("androidTest").assets.srcDir("$projectDir/schemas")
     }
 }
 
@@ -64,10 +59,4 @@ dependencies {
     testImplementation(libs.androidx.test.core.ktx)
     testImplementation(libs.androidx.test.ext.junit)
     testImplementation(libs.turbine)
-
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.androidx.arch.core.testing)
-    androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation(libs.room.testing)
 }

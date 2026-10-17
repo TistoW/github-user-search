@@ -6,6 +6,8 @@ An Android app that searches GitHub users and shows their profile, built for the
 
 The main deliverable is the XML app in `:app`. I also wrote the same app in Jetpack Compose (`:app-compose`) on top of the exact same domain and data modules, mostly to prove the layers are decoupled for real and not just by folder name.
 
+The brief lists a "Search screen" and a "User list screen". Here they are one screen on purpose: the search results are the user list, and a second screen would only hold a text field above the same list. With an empty query that screen shows the recently viewed users instead of nothing. The detail screen is the second one.
+
 <table>
   <tr>
     <td><img src="docs/screenshots/users-light.png" width="220" alt="Search results, light"></td>
@@ -36,7 +38,7 @@ On the web side, these are full-stack products I built and run, in case they hel
 
 ## Build and run
 
-You need Android Studio Ladybug or newer, or just a JDK 17 and the Android SDK for the command line. The project builds with the Gradle wrapper, so nothing else has to be installed.
+You need Android Studio Meerkat (2024.3.1) or newer, or just a JDK 17 and the Android SDK for the command line. The project builds with the Gradle wrapper, so nothing else has to be installed.
 
 ```
 ./gradlew :app:installDebug           # the XML app (main deliverable)
@@ -45,7 +47,7 @@ You need Android Studio Ladybug or newer, or just a JDK 17 and the Android SDK f
 
 The two apps have different application ids (`com.tisto.githubusers` and `com.tisto.githubusers.compose`), so they install side by side.
 
-**GitHub rate limit.** Unauthenticated, the search API allows about 10 requests per minute. For heavy testing, add a personal access token (no scopes needed) to `local.properties`:
+**GitHub rate limits.** Unauthenticated, GitHub applies two limits: the search API allows 10 requests per minute, and every other endpoint, including the profile on the detail screen, allows 60 requests per hour per IP. For heavy testing, add a personal access token (no scopes needed) to `local.properties`:
 
 ```
 github.token=ghp_yourtoken
@@ -60,7 +62,7 @@ That file is git-ignored. The token is optional: without it `BuildConfig` falls 
 ./gradlew connectedDebugAndroidTest    # Espresso + Compose UI tests, needs a device or emulator
 ```
 
-**Prebuilt APKs** are attached to the [v1.0.0 release](https://github.com/TistoW/github-user-search/releases/tag/v1.0.0). They are signed with the debug key, only so reviewers can install them.
+**Prebuilt APKs** are attached to the [v1.0.1 release](https://github.com/TistoW/github-user-search/releases/tag/v1.0.1). They are signed with the debug key, only so reviewers can install them.
 
 **Chucker.** Debug builds log every HTTP call with Chucker. On Android 13 and newer, grant the notification permission when asked (or in system settings), then tap the Chucker notification after a search. You can also long-press the app icon and pick the Chucker shortcut. Release builds use the no-op artifact, so nothing is logged there.
 
@@ -91,7 +93,7 @@ flowchart LR
 - A failed network call leaves the cache untouched.
 - "Recently viewed" is a timestamp on the user row, limited to the latest 20.
 
-**Errors become UI states.** The data layer maps every failure to a `DataError`: `Network` (no connection), `RateLimited` (403 with `X-RateLimit-Remaining: 0`, or 429, with the reset time), `NotFound` (404) and `Unknown`. A plain 403 is deliberately not a rate limit. The UI then picks wording by context: offline with cached results says "Showing saved results", offline with nothing cached shows "Nothing saved for this search yet", a rate limit says how many minutes to wait, and a missing account shows a dedicated screen with a way back. Errors are one-shot snackbars with Retry, so they do not reappear after rotation.
+**Errors become UI states.** The data layer maps every failure to a `DataError`: `Network` (no connection), `RateLimited` (403 with `X-RateLimit-Remaining: 0`, or 429, with the reset time), `NotFound` (404) and `Unknown`. A plain 403 is deliberately not a rate limit. The UI then picks wording by context: offline with cached results says "Showing saved results", offline with nothing cached shows "Nothing saved for this search yet", a rate limit says how many minutes to wait (worded for the search limit on the list and for the general API limit on a profile, with its own empty state instead of the offline one), and a missing account shows a dedicated screen with a way back. Errors are one-shot snackbars with Retry, so they do not reappear after rotation.
 
 **Dependency injection** is Hilt. `:data` provides the network, database and repository. The optional GitHub token is a `@GitHubToken` qualified `String` that each app module binds from its own `BuildConfig`, which keeps `:data` free of any app-specific configuration.
 
@@ -145,9 +147,9 @@ flowchart LR
 | Module | Unit tests | UI tests |
 |---|---|---|
 | `:domain` | 6 | |
-| `:data` (Room via Robolectric, API via MockWebServer, repository) | 36 | |
-| `:app` | 18 | 6 (Espresso, Hilt, fake repository) |
-| `:app-compose` | 18 | 9 (8 screen-level, 1 end-to-end flow) |
-| Total | 78 | 15 |
+| `:data` (Room via Robolectric, API via MockWebServer, repository) | 38 | |
+| `:app` | 18 | 7 (Espresso, Hilt, fake repository) |
+| `:app-compose` | 18 | 10 (9 screen-level, 1 end-to-end flow) |
+| Total | 80 | 17 |
 
 CI runs the unit tests, lint and a debug build on every push, plus the UI tests on an API 34 emulator.

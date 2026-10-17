@@ -223,7 +223,7 @@ private fun Header(login: String, avatarUrl: String, user: UserDetail?) {
                     modifier = Modifier.padding(top = Spacing.xs),
                 )
             }
-            if (user?.type.equals("Organization", ignoreCase = true)) {
+            if (user?.isOrganization == true) {
                 OrganizationChip(modifier = Modifier.padding(top = Spacing.s))
             }
         }

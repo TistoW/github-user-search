@@ -6,6 +6,8 @@ Aplikasi Android untuk mencari user GitHub dan melihat profilnya, dibuat untuk a
 
 Hasil utamanya adalah aplikasi XML di `:app`. Saya juga menulis versi Jetpack Compose (`:app-compose`) di atas modul domain dan data yang sama persis, terutama untuk membuktikan bahwa layer-nya benar-benar terpisah, bukan sekadar beda folder.
 
+Brief menyebut "Search screen" dan "User list screen". Di sini keduanya sengaja satu layar: hasil pencarian adalah daftar user, dan layar kedua hanya akan berisi kolom teks di atas daftar yang sama. Saat query kosong, layar itu menampilkan user yang baru dilihat, bukan layar kosong. Layar kedua adalah detail.
+
 <table>
   <tr>
     <td><img src="docs/screenshots/users-light.png" width="220" alt="Hasil pencarian, terang"></td>
@@ -36,7 +38,7 @@ Untuk sisi web, berikut produk full-stack yang saya bangun dan jalankan, kalau b
 
 ## Build dan menjalankan
 
-Butuh Android Studio Ladybug atau lebih baru, atau cukup JDK 17 dan Android SDK untuk command line. Project dibuild lewat Gradle wrapper, jadi tidak ada yang perlu diinstall lagi.
+Butuh Android Studio Meerkat (2024.3.1) atau lebih baru, atau cukup JDK 17 dan Android SDK untuk command line. Project dibuild lewat Gradle wrapper, jadi tidak ada yang perlu diinstall lagi.
 
 ```
 ./gradlew :app:installDebug           # aplikasi XML (hasil utama)
@@ -45,7 +47,7 @@ Butuh Android Studio Ladybug atau lebih baru, atau cukup JDK 17 dan Android SDK 
 
 Kedua aplikasi punya application id berbeda (`com.tisto.githubusers` dan `com.tisto.githubusers.compose`), jadi bisa terpasang berdampingan.
 
-**Rate limit GitHub.** Tanpa autentikasi, search API hanya mengizinkan sekitar 10 request per menit. Untuk testing intensif, tambahkan personal access token (tanpa scope) ke `local.properties`:
+**Rate limit GitHub.** Tanpa autentikasi, GitHub menerapkan dua batas: search API mengizinkan 10 request per menit, dan endpoint lain, termasuk profil di layar detail, mengizinkan 60 request per jam per IP. Untuk testing intensif, tambahkan personal access token (tanpa scope) ke `local.properties`:
 
 ```
 github.token=ghp_tokenanda
@@ -60,7 +62,7 @@ File itu di-ignore git. Token bersifat opsional: tanpa token, `BuildConfig` mema
 ./gradlew connectedDebugAndroidTest    # UI test Espresso + Compose, perlu device atau emulator
 ```
 
-**APK siap pakai** ada di halaman [release v1.0.0](https://github.com/TistoW/github-user-search/releases/tag/v1.0.0). APK itu ditandatangani dengan debug key, hanya supaya reviewer bisa menginstalnya.
+**APK siap pakai** ada di halaman [release v1.0.1](https://github.com/TistoW/github-user-search/releases/tag/v1.0.1). APK itu ditandatangani dengan debug key, hanya supaya reviewer bisa menginstalnya.
 
 **Chucker.** Build debug mencatat semua panggilan HTTP dengan Chucker. Di Android 13 ke atas, izinkan notifikasi saat diminta (atau lewat pengaturan sistem), lalu tap notifikasi Chucker setelah melakukan pencarian. Bisa juga dengan menekan lama ikon aplikasi dan memilih shortcut Chucker. Build release memakai artifact no-op, jadi tidak ada yang dicatat.
 
@@ -91,7 +93,7 @@ flowchart LR
 - Panggilan network yang gagal tidak mengubah cache.
 - "Recently viewed" adalah timestamp di baris user, dibatasi 20 terakhir.
 
-**Error menjadi UI state.** Data layer memetakan setiap kegagalan ke `DataError`: `Network` (tidak ada koneksi), `RateLimited` (403 dengan `X-RateLimit-Remaining: 0`, atau 429, beserta waktu reset), `NotFound` (404) dan `Unknown`. 403 biasa sengaja tidak dianggap rate limit. UI lalu memilih kalimat sesuai konteks: offline dengan hasil cache berkata "Showing saved results", offline tanpa cache menampilkan "Nothing saved for this search yet", rate limit menyebut berapa menit harus menunggu, dan akun yang tidak ada punya layar sendiri dengan jalan kembali. Error muncul sebagai snackbar sekali tampil dengan tombol Retry, jadi tidak muncul lagi setelah rotasi.
+**Error menjadi UI state.** Data layer memetakan setiap kegagalan ke `DataError`: `Network` (tidak ada koneksi), `RateLimited` (403 dengan `X-RateLimit-Remaining: 0`, atau 429, beserta waktu reset), `NotFound` (404) dan `Unknown`. 403 biasa sengaja tidak dianggap rate limit. UI lalu memilih kalimat sesuai konteks: offline dengan hasil cache berkata "Showing saved results", offline tanpa cache menampilkan "Nothing saved for this search yet", rate limit menyebut berapa menit harus menunggu (kalimat untuk batas search di daftar, dan untuk batas API umum di profil, dengan empty state sendiri, bukan yang offline), dan akun yang tidak ada punya layar sendiri dengan jalan kembali. Error muncul sebagai snackbar sekali tampil dengan tombol Retry, jadi tidak muncul lagi setelah rotasi.
 
 **Dependency injection** memakai Hilt. `:data` menyediakan network, database dan repository. Token GitHub opsional adalah `String` dengan qualifier `@GitHubToken` yang di-bind oleh masing-masing modul app dari `BuildConfig`-nya sendiri, sehingga `:data` bebas dari konfigurasi khusus app.
 
@@ -145,9 +147,9 @@ flowchart LR
 | Modul | Unit test | UI test |
 |---|---|---|
 | `:domain` | 6 | |
-| `:data` (Room via Robolectric, API via MockWebServer, repository) | 36 | |
-| `:app` | 18 | 6 (Espresso, Hilt, fake repository) |
-| `:app-compose` | 18 | 9 (8 level screen, 1 alur end-to-end) |
-| Total | 78 | 15 |
+| `:data` (Room via Robolectric, API via MockWebServer, repository) | 38 | |
+| `:app` | 18 | 7 (Espresso, Hilt, fake repository) |
+| `:app-compose` | 18 | 10 (9 level screen, 1 alur end-to-end) |
+| Total | 80 | 17 |
 
 CI menjalankan unit test, lint dan build debug di setiap push, ditambah UI test di emulator API 34.
