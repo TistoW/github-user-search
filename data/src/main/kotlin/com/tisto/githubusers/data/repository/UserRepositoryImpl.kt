@@ -30,7 +30,8 @@ class UserRepositoryImpl(
     // A failed call leaves the cached results for this query untouched.
     override suspend fun searchUsers(query: String): Result<Unit> {
         val key = query.cacheKey()
-        return apiCall { api.searchUsers(key) }.map { response ->
+        val response = apiCall { api.searchUsers(key) }.getOrElse { return Result.failure(it) }
+        return persist {
             database.withTransaction {
                 userDao.upsertSummaries(response.items.map { it.toEntity() })
                 searchResultDao.replaceResults(
@@ -45,12 +46,17 @@ class UserRepositoryImpl(
         userDao.observeUser(login).map { it?.toUserDetail() }
 
     override suspend fun refreshUser(login: String): Result<Unit> =
-        apiCall { api.getUser(login) }.map { userDao.upsertDetail(it.toEntity(now())) }
+        apiCall { api.getUser(login) }
+            .getOrElse { return Result.failure(it) }
+            .let { dto -> persist { userDao.upsertDetail(dto.toEntity(now())) } }
 
     override fun observeRecentlyViewed(): Flow<List<User>> =
         userDao.observeRecentlyViewed(RECENTLY_VIEWED_LIMIT).map { rows -> rows.map { it.toUser() } }
 
     override suspend fun markViewed(login: String) = userDao.markViewed(login, now())
+
+    // A Room failure must surface as a Result, not escape into the caller's coroutine and crash.
+    private suspend fun persist(block: suspend () -> Unit): Result<Unit> = apiCall(block)
 
     private fun String.cacheKey() = trim().lowercase()
 

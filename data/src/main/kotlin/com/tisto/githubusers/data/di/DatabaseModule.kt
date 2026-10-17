@@ -19,7 +19,10 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): GitHubDatabase =
-        Room.databaseBuilder(context, GitHubDatabase::class.java, GitHubDatabase.NAME).build()
+        Room.databaseBuilder(context, GitHubDatabase::class.java, GitHubDatabase.NAME)
+            // Pure cache of the API, so rebuilding it on a schema change loses nothing.
+            .fallbackToDestructiveMigration(dropAllTables = true)
+            .build()
 
     @Provides
     fun provideUserDao(database: GitHubDatabase): UserDao = database.userDao()

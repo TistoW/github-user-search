@@ -139,6 +139,26 @@ class UserRepositoryImplTest : DaoTestBase() {
         assertEquals(listOf(2L, 1L), repository.observeRecentlyViewed().first().map { it.id })
     }
 
+    @Test
+    fun `a database failure while saving search results returns Unknown instead of throwing`() = runTest {
+        server.enqueue(json(search(1)))
+        db.openHelper.writableDatabase.execSQL("DROP TABLE users")
+
+        val error = repository.searchUsers("octo").exceptionOrNull()
+
+        assertTrue("got $error", error is DataError.Unknown)
+    }
+
+    @Test
+    fun `a database failure while saving a profile returns Unknown instead of throwing`() = runTest {
+        server.enqueue(json(resource("user_octocat.json")))
+        db.openHelper.writableDatabase.execSQL("DROP TABLE users")
+
+        val error = repository.refreshUser("octocat").exceptionOrNull()
+
+        assertTrue("got $error", error is DataError.Unknown)
+    }
+
     private fun search(vararg ids: Long): String {
         val items = ids.joinToString(",") {
             """{"login":"user$it","id":$it,"avatar_url":"https://avatars/$it","html_url":"https://github.com/user$it","type":"User"}"""
