@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -39,6 +40,11 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -187,7 +193,7 @@ private fun UsersContent(
             }
         }
         Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            UserList(users = state.users, onUserClick = onUserClick)
+            UserList(query = state.query, users = state.users, onUserClick = onUserClick)
             if (state.users.isEmpty() && !state.isLoading) {
                 EmptyState(
                     state = state,
@@ -223,10 +229,20 @@ private fun RecentHeader() {
 }
 
 @Composable
-private fun UserList(users: List<User>, onUserClick: (User) -> Unit) {
+private fun UserList(query: String, users: List<User>, onUserClick: (User) -> Unit) {
+    val listState = rememberLazyListState()
+    // Saved so a rotation does not look like a new query and throw the scroll position away.
+    var shownQuery by rememberSaveable { mutableStateOf(query) }
+    LaunchedEffect(query) {
+        if (query != shownQuery) {
+            shownQuery = query
+            listState.scrollToItem(0)
+        }
+    }
     // With the keyboard open the parent already pads for it, so only the bare navigation bar is added here.
     val bottomInset = WindowInsets.navigationBars.exclude(WindowInsets.ime).asPaddingValues()
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = bottomInset.calculateBottomPadding()),
     ) {

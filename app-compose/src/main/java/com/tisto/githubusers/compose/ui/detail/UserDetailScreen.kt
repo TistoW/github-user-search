@@ -262,13 +262,7 @@ private fun StatsCard(followers: Int, following: Int, repos: Int) {
 @Composable
 private fun RowScope.Stat(value: String, label: Int, icon: Int) {
     Column(modifier = Modifier.weight(1f).padding(horizontal = Spacing.m)) {
-        Text(
-            text = value,
-            style = StatTextStyle,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = Spacing.xs)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 painterResource(icon),
                 contentDescription = null,
@@ -276,13 +270,18 @@ private fun RowScope.Stat(value: String, label: Int, icon: Int) {
                 modifier = Modifier.size(14.dp),
             )
             Text(
-                text = stringResource(label),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
+                text = value,
+                style = StatTextStyle,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(start = Spacing.xs),
             )
         }
+        Text(
+            text = stringResource(label),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

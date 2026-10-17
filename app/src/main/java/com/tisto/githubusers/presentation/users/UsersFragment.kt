@@ -66,8 +66,12 @@ class UsersFragment : Fragment(R.layout.fragment_users) {
             }
         }
 
+        // The shown query is the one the list belongs to, so a change means a different result set.
+        var shownQuery = viewModel.uiState.value?.query
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.users)
+            val newQuery = state.query != shownQuery
+            shownQuery = state.query
+            adapter.submitList(state.users) { if (newQuery) binding.list.scrollToPosition(0) }
             render(binding, state)
             state.errorToShow?.let { error ->
                 viewModel.onErrorShown()

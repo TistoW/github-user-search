@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -53,6 +54,7 @@
 
                         <ImageView
                             android:id="@+id/avatar"
+                            tools:ignore="ContentDescription"
                             android:layout_width="@dimen/avatar_detail"
                             android:layout_height="@dimen/avatar_detail" />
 
@@ -121,10 +123,6 @@
                             android:orientation="vertical"
                             android:paddingHorizontal="@dimen/space_m">
 
-                            <TextView
-                                android:id="@+id/stat_followers"
-                                style="@style/Widget.App.StatNumber" />
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -134,14 +132,19 @@
                                 <ImageView
                                     android:layout_width="14dp"
                                     android:layout_height="14dp"
-                                    android:importantForAccessibility="no"
+                                    android:contentDescription="@null"
                                     android:src="@drawable/ic_people"
                                     app:tint="?attr/colorOnSurfaceVariant" />
 
                                 <TextView
-                                    style="@style/Widget.App.StatLabel"
-                                    android:text="@string/stat_followers" />
+                                    android:id="@+id/stat_followers"
+                                    style="@style/Widget.App.StatNumber"
+                                    android:layout_marginStart="@dimen/space_xs" />
                             </LinearLayout>
+
+                            <TextView
+                                style="@style/Widget.App.StatLabel"
+                                android:text="@string/stat_followers" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -150,10 +153,6 @@
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:paddingHorizontal="@dimen/space_m">
-
-                            <TextView
-                                android:id="@+id/stat_following"
-                                style="@style/Widget.App.StatNumber" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -164,14 +163,19 @@
                                 <ImageView
                                     android:layout_width="14dp"
                                     android:layout_height="14dp"
-                                    android:importantForAccessibility="no"
+                                    android:contentDescription="@null"
                                     android:src="@drawable/ic_person"
                                     app:tint="?attr/colorOnSurfaceVariant" />
 
                                 <TextView
-                                    style="@style/Widget.App.StatLabel"
-                                    android:text="@string/stat_following" />
+                                    android:id="@+id/stat_following"
+                                    style="@style/Widget.App.StatNumber"
+                                    android:layout_marginStart="@dimen/space_xs" />
                             </LinearLayout>
+
+                            <TextView
+                                style="@style/Widget.App.StatLabel"
+                                android:text="@string/stat_following" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -180,10 +184,6 @@
                             android:layout_weight="1"
                             android:orientation="vertical"
                             android:paddingHorizontal="@dimen/space_m">
-
-                            <TextView
-                                android:id="@+id/stat_repos"
-                                style="@style/Widget.App.StatNumber" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -194,14 +194,19 @@
                                 <ImageView
                                     android:layout_width="14dp"
                                     android:layout_height="14dp"
-                                    android:importantForAccessibility="no"
+                                    android:contentDescription="@null"
                                     android:src="@drawable/ic_repo"
                                     app:tint="?attr/colorOnSurfaceVariant" />
 
                                 <TextView
-                                    style="@style/Widget.App.StatLabel"
-                                    android:text="@string/stat_repos" />
+                                    android:id="@+id/stat_repos"
+                                    style="@style/Widget.App.StatNumber"
+                                    android:layout_marginStart="@dimen/space_xs" />
                             </LinearLayout>
+
+                            <TextView
+                                style="@style/Widget.App.StatLabel"
+                                android:text="@string/stat_repos" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -217,6 +222,7 @@
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_company" />
 
                         <TextView
@@ -230,6 +236,7 @@
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_location" />
 
                         <TextView
@@ -240,10 +247,11 @@
                     <LinearLayout
                         android:id="@+id/row_blog"
                         style="@style/Widget.App.InfoRow"
-                android:background="?attr/selectableItemBackground">
+                        android:background="?attr/selectableItemBackground">
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_link" />
 
                         <TextView
@@ -254,10 +262,11 @@
                     <LinearLayout
                         android:id="@+id/row_twitter"
                         style="@style/Widget.App.InfoRow"
-                android:background="?attr/selectableItemBackground">
+                        android:background="?attr/selectableItemBackground">
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_alternate_email" />
 
                         <TextView
@@ -268,10 +277,11 @@
                     <LinearLayout
                         android:id="@+id/row_email"
                         style="@style/Widget.App.InfoRow"
-                android:background="?attr/selectableItemBackground">
+                        android:background="?attr/selectableItemBackground">
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_mail" />
 
                         <TextView
@@ -285,6 +295,7 @@
 
                         <ImageView
                             style="@style/Widget.App.InfoIcon"
+                            android:contentDescription="@null"
                             android:src="@drawable/ic_calendar" />
 
                         <TextView

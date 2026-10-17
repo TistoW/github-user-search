@@ -34,8 +34,12 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail) {
     // True while the refresh was started by a pull, so the pull spinner and the top bar never show together.
     private var pulling = false
 
+    // The fragment's args already carry the avatar, so the loaded profile only reloads it when the URL differs.
+    private var avatarUrl: String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentUserDetailBinding.bind(view)
+        avatarUrl = null
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
@@ -119,6 +123,8 @@ class UserDetailFragment : Fragment(R.layout.fragment_user_detail) {
     }
 
     private fun loadAvatar(binding: FragmentUserDetailBinding, url: String) {
+        if (url == avatarUrl) return
+        avatarUrl = url
         val sizePx = resources.getDimensionPixelSize(R.dimen.avatar_detail) * 2
         Glide.with(binding.avatar)
             .load(url.withAvatarSize(sizePx))
